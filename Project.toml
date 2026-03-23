@@ -1,0 +1,16 @@
+[deps]
+Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+BitonicSort = "046256cb-d774-41de-a243-db2e1ebe8eb7"
+KernelAbstractions = "63c18a36-062a-441e-b654-da1e3ab1ce7c"
+KernelIntrinsics = "f9588fbb-d238-4998-b15a-468e8766d49a"
+PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+RadiK = "c173e4ef-a5d8-447f-8df0-20ebc266f2f3"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[sources]
+BitonicSort = {url = "https://github.com/WilliBee/BitonicSort.jl"}
+KernelIntrinsics = {url = "https://github.com/WilliBee/KernelIntrinsics.jl.git"}
+RadiK = {url = "https://github.com/WilliBee/RadiK.jl"}
