@@ -34,7 +34,7 @@ for (i, pow_2) in enumerate(N_powers)
     data = rand!(allocate(backend, Float32, n))
 
     # Allocate workspace
-    ws = RadiKWorkspace(backend, n, 1, Int32, Float32)
+    ws = RadiKWorkspace(backend, n, 1, Int32)
 
     for (j, k) in enumerate(K_values)
         print("$k ")
@@ -87,21 +87,21 @@ for (i, pow_2) in enumerate(N_powers)
         timings_burst[i, j] = mean(burst_t)
         timings_steady[i, j] = mean(steady_t)
 
-        if @isdefined Metal
-            data_cpu = Array(data)
-            b_cpu = @benchmark partialsort($data_cpu, 1:$k, rev=true)
-            timings_cpu[i, j] = median(b_cpu).time / 1e6
-        end
+        # if @isdefined Metal
+        #     data_cpu = Array(data)
+        #     b_cpu = @benchmark partialsort($data_cpu, 1:$k, rev=true)
+        #     timings_cpu[i, j] = median(b_cpu).time / 1e6
+        # end
 
-        if k <= 16 && @isdefined Metal
-            data_mat = reshape(data, :, 1)
-            I = KA.zeros(backend, UInt32, k, 1)
-            V = KA.zeros(backend, Float32, k, 1)
-            b_mps = @benchmark Metal.MPS.topk!($data_mat, $I, $V, $k)
-            timings_mps[i, j] = median(b_mps).time / 1e6
-            # Free MPS arrays
-            I = V = data_mat = nothing
-        end
+        # if k <= 16 && @isdefined Metal
+        #     data_mat = reshape(data, :, 1)
+        #     I = KA.zeros(backend, UInt32, k, 1)
+        #     V = KA.zeros(backend, Float32, k, 1)
+        #     b_mps = @benchmark Metal.MPS.topk!($data_mat, $I, $V, $k)
+        #     timings_mps[i, j] = median(b_mps).time / 1e6
+        #     # Free MPS arrays
+        #     I = V = data_mat = nothing
+        # end
 
         GC.gc(true)
     end
@@ -126,20 +126,20 @@ pretty_table(
     display_size = (typemax(Int), typemax(Int))
 )
 
-println("\nTimings CPU (milliseconds):")
-pretty_table(
-    round.(timings_cpu, digits=2);
-    row_labels = ["2^$(p)" for p in N_powers],
-    row_label_column_alignment = :l,
-    column_labels = ["K=$k" for k in K_values],
-    display_size = (typemax(Int), typemax(Int))
-)
+# println("\nTimings CPU (milliseconds):")
+# pretty_table(
+#     round.(timings_cpu, digits=2);
+#     row_labels = ["2^$(p)" for p in N_powers],
+#     row_label_column_alignment = :l,
+#     column_labels = ["K=$k" for k in K_values],
+#     display_size = (typemax(Int), typemax(Int))
+# )
 
-println("\nTimings MPS (milliseconds):")
-pretty_table(
-    round.(timings_mps, digits=2);
-    row_labels = ["2^$(p)" for p in N_powers],
-    row_label_column_alignment = :l,
-    column_labels = ["K=$k" for k in K_values],
-    display_size = (typemax(Int), typemax(Int))
-)
+# println("\nTimings MPS (milliseconds):")
+# pretty_table(
+#     round.(timings_mps, digits=2);
+#     row_labels = ["2^$(p)" for p in N_powers],
+#     row_label_column_alignment = :l,
+#     column_labels = ["K=$k" for k in K_values],
+#     display_size = (typemax(Int), typemax(Int))
+# )
