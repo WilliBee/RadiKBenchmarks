@@ -44,7 +44,7 @@ for (i, pow_2) in enumerate(N_powers_a)
     Random.seed!(42)
     data = rand!(allocate(backend, Float32, total_len))
 
-    ws = RadiKWorkspace(backend, n, BATCH_a, Int32, Float32)
+    ws = RadiKWorkspace(backend, n, BATCH_a, Int32)
 
     result = KA.zeros(backend, Float32, Int(K_a), Int(BATCH_a))
     indices_in = adapt(backend, collect(Int32(1):Int32(total_len)))
@@ -108,7 +108,7 @@ for (i, pow_2) in enumerate(K_powers_b)
     Random.seed!(42)
     data = rand!(allocate(backend, Float32, total_len))
 
-    ws = RadiKWorkspace(backend, N_b, BATCH_b, Int32, Float32)
+    ws = RadiKWorkspace(backend, N_b, BATCH_b, Int32)
 
     result = KA.zeros(backend, Float32, Int(k), Int(BATCH_b))
     indices_in = adapt(backend, collect(Int32(1):Int32(total_len)))
@@ -172,7 +172,7 @@ for (i, pow_2) in enumerate(BATCH_powers_c)
     Random.seed!(42)
     data = rand!(allocate(backend, Float32, total_len))
 
-    ws = RadiKWorkspace(backend, N_c, batch_size, Int32, Float32)
+    ws = RadiKWorkspace(backend, N_c, batch_size, Int32)
 
     result = KA.zeros(backend, Float32, Int(K_c), Int(batch_size))
     indices_in = adapt(backend, collect(Int32(1):Int32(total_len)))
